@@ -416,7 +416,7 @@ curl http://127.0.0.1:3080/dsh-whale/audio.json
 - `/dsh-whale/update-check.json` → 200 JSON：检查更新（`{ok, current, latest, hasUpdate, source}`）；**点了才联网**，镜像优先（npmmirror → jsdelivr → unpkg → npmjs）+ `npm view` 兜底，宿主侧 10 分钟缓存
 - 浏览器 F5 后右下角出现挂件
 
-> ⚠️ **关于上面这些 `curl`**：全部 **26 个** `/dsh-whale/*` 路由都已接入 **DSH 浏览器信任栅栏**（`connection.requestRejection`）。
+> ⚠️ **关于上面这些 `curl`**：全部 **27 个** `/dsh-whale/*` 路由都已接入 **DSH 浏览器信任栅栏**（`connection.requestRejection`）。
 > 因此**不带会话凭据的裸 `curl` 会返回 401**（伪造 `Host` 头则是 403）—— 这是预期行为，不是接口坏了。
 > 想验证接口是否存活，看返回 **401/403** 即说明路由已注册且栅栏在工作；在浏览器里访问同一条路径（带会话）才是 200。
 > 另外**自 0.3.15 起，写请求（`POST`/`PUT`/`PATCH`/`DELETE`）还必须是本机来源**（Host 为 `127.0.0.1`/`localhost`/`[::1]`），否则 403 —— 详见上方「安全边界」。
@@ -498,3 +498,7 @@ curl http://127.0.0.1:3080/dsh-whale/audio.json
 本项目**代码**基于 **MIT License** 开源，详见 [LICENSE](LICENSE)。
 
 ⚠️ **`assets/` 下的美术素材（图片 / 动图 / 音效）不在 MIT 覆盖范围内**：它们由维护者提供或使用 AI 工具生成，按「原样（as-is）」随插件分发、仅供运行本插件使用，不授予再许可、也不声明为原创作品。逐项来源、元数据清理说明与权利主张（takedown）方式见 **[PROVENANCE.md](PROVENANCE.md)**。
+
+## 可选 Electron 桌宠配套（提案）
+
+新增的 /dsh-whale/pet 页面仅用于配套桌面壳的透明小窗，返回轻量 HTML，不加载完整会话界面。页面带 dshwPet=1 时固定鲸鱼位置，并通过受限 whalePet preload 桥请求恢复主窗口或处理审批；审批会传递待审批 ID，不能准确匹配时由桌面壳恢复主窗口。普通网页不提供此原生桥。它不启动外部窗口进程、不安装桌面程序，也不包含鲸鱼美术素材。配套壳仍需单独安装和启用；此提案尚待维护者确认。
