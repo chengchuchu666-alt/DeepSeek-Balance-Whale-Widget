@@ -31,6 +31,13 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "companion": {
+      "route": "/dsh-whale/pet",
+      "width": 560,
+      "height": 620,
+      "title": "小鲸鱼",
+      "showOnMinimize": true
     }
   },
   "license": "MIT"
